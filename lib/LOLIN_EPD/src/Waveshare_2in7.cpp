@@ -264,25 +264,27 @@ void Waveshare_2in7::update() {
 void Waveshare_2in7::drawPixel(int16_t x, int16_t y, uint16_t color) {
   uint8_t *pBuf;
 
-  // check rotation, move pixel around if necessary
-  switch (getRotation()) {
-    case 1:
-      EPD_swap(x, y);
-      x = WIDTH - x - 1;
-      break;
-    case 2:
-      x = WIDTH - x - 1;
-      y = HEIGHT - y - 1;
-      break;
-    case 3:
-      EPD_swap(x, y);
-      y = HEIGHT - y - 1;
-      break;
-  }
-
-  // Transformed to native pixels
+// Transformed to native pixels
   if ((x < 0) || (x >= width()) || (y < 0) || (y >= height())) {
     return;
+  }
+
+  // check rotation, move pixel around if necessary
+  switch (getRotation()) {
+    case 0:
+    EPD_swap(x, y);
+    y = WIDTH - y - 1;
+        break;
+    case 1:
+        break;
+    case 2:
+      EPD_swap(x, y);
+      x = HEIGHT - x - 1;
+        break;
+    case 3:
+      x = HEIGHT - x - 1;
+      y = WIDTH - y - 1;
+        break;
   }
 
   // make our buffer happy

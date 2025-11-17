@@ -1631,7 +1631,7 @@ To create/register a plugin, you have to :
     #define USES_P082   // GPS
     #define USES_P089   // Ping
     #if !defined(USES_P095) && defined(ESP32) && !defined(PLUGIN_BUILD_IR_EXTENDED)
-      #define USES_P095   // TFT ILI9xxx
+//      #define USES_P095   // TFT ILI9xxx
     #endif
     #if !defined(PLUGIN_BUILD_NORMAL_IRext)
       // IRext builds do need quite a lot of build space
@@ -1649,6 +1649,11 @@ To create/register a plugin, you have to :
     #endif
     #if !defined(USES_P180) && defined(ESP32)
       #define USES_P180   // Generic - I2C Generic
+    #endif
+    // Remove plugins from 'collection' builds which rely on the neopixel library
+    // to make sure those builds will fit again.
+    #ifdef USES_P038
+    #undef USES_P038
     #endif
 #endif
 
